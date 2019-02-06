@@ -1,0 +1,372 @@
+db.emp.insertMany([{EID:"e001",name:"Ram",dept:"IT",Salary:"5000",location:"kerala"},{EID:"e001",name:"Ram",dept:"IT",Salary:"5000",location:"kerala"},{EID:"e001",name:"Ram",dept:"IT",Salary:"5000",location:"kerala"}])
+
+
+
+db.emp.insert({pID:"p788yui",pname:"printer"})
+db.emp.insert({})
+--------------------------------------
+db.products.insert(
+{
+pid:"p756354635"
+,Pname:"printer",
+tags:["blackandwhite","laser"],
+likes:100,
+comment:
+[{user:"Anu",comment:"jhkjhkj"},
+{user:"Ram",comment:"jhkjhj"}]
+})
+----------------------------------------
+Q2)
+db.emp.insertMany([{EID:"e001",name:"Ram",dept:"IT",Salary:25000,location:"China"},{EID:"e001",name:"Ram",dept:"HR",Salary:35000,location:"Japan"},
+{EID:"e001",name:"abc",dept:"HR",Salary:35000,location:"usa"},
+{EID:"e001",name:"def",dept:"HR",Salary:20000,location:"austr"},
+{EID:"e001",name:"ghi",dept:"HR",Salary:8000,location:"kerala"},
+{EID:"e001",name:"jkl",dept:"HR",Salary:5000,location:"Japan"},
+{EID:"e001",name:"mno",dept:"HR",Salary:1000,location:"france"},
+{EID:"e001",name:"pqr",dept:"HR",Salary:100,location:"Japan"},
+{EID:"e001",name:"stu",dept:"HR",Salary:85000,location:"Japan"},
+{EID:"e001",name:"vwx",dept:"Finance",Salary:200,location:"India"}])
+....................................................
+db.emp.find().limit(1)
+
+we will get o/p as 
+{ "_id" : ObjectId("5c5235176ea6e5da51afa28f"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : "5000", "location" : "kerala" }
+
+----------------------------------------
+
+if we give  db.emp.find().limit(5)
+
+{ "_id" : ObjectId("5c5235176ea6e5da51afa28f"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : 5000 , "location" : "kerala" }
+{ "_id" : ObjectId("5c5235176ea6e5da51afa290"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : 5000, "location" : "kerala" }
+{ "_id" : ObjectId("5c5235176ea6e5da51afa291"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : 5000, "location" : "kerala" }
+{ "_id" : ObjectId("5c52364d6ea6e5da51afa292") }
+{ "_id" : ObjectId("5c523b086ea6e5da51afa296"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : 25000, "location" : "China" }
+>
+--------------------------------------------
+
+Q3) if we want to know details of employee whose name is "ram"?
+
+db.collectionname.find({name:"Ram"});
+here,
+db.emp.find({name:"abc"});
+
+output is:
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29b"), "EID" : "e001", "name" : "abc", "dept" : "HR", "Salary" : "35000", "location" : "usa" }
+>
+similarly,
+db.emp.find({dept:"Finance"});
+
+output is :
+{ "_id" : ObjectId("5c523b086ea6e5da51afa298"), "EID" : "e001", "name" : "Ram", "dept" : "Finance", "Salary" : "15000", "location" : "India" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa2a2"), "EID" : "e001", "name" : "vwx", "dept" : "Finance", "Salary" : "15000", "location" : "India" }
+>
+------------------------------------------
+
+less than is represented by $lt:
+less than or equal to $et:
+
+db.emp.find({Salary:{$lt:8000}})
+----------------------------------
+Q)  salary greater than 8000 in the dept of HR
+
+ db.emp.find({"Salary":{$gt:8000},dept:"HR"})
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a4"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : 35000, "location" : "Japan" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a5"), "EID" : "e001", "name" : "abc", "dept" : "HR", "Salary" : 35000, "location" : "usa" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a6"), "EID" : "e001", "name" : "def", "dept" : "HR", "Salary" : 20000, "location" : "austr" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2ab"), "EID" : "e001", "name" : "stu", "dept" : "HR", "Salary" : 85000, "location" : "Japan" }
+-----------------------------------------------------------------------------------------------------------------------
+Q) to get details from HR and IT dept , with salary above 8000
+
+
+ db.emp.find({"dept":{$in:["HR","IT"]},"Salary":{$gt:8000}})
+
+
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a3"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : 25000, "location" : "China" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a4"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : 35000, "location" : "Japan" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a5"), "EID" : "e001", "name" : "abc", "dept" : "HR", "Salary" : 35000, "location" : "usa" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a6"), "EID" : "e001", "name" : "def", "dept" : "HR", "Salary" : 20000, "location" : "austr" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2ab"), "EID" : "e001", "name" : "stu", "dept" : "HR", "Salary" : 85000, "location" : "Japan" }
+-------------------------------------------------------------------------------------
+ db.emp.find({"location":{$in:["China","Japan"]},"dept":"HR","name":Ram })
+
+the above somehow worked but the correct ans is below:
+db.emp.find({{name:"Ram"},{$or:[{loc:"Japan"},{Dept:"HR"}]})
+
+db.emp.find({"name":"Ram","location":"Cochin","dept":"HR"})
+
+> db.emp.find({$or:[{"location":"Japan"},{"dept":"HR"}]})
+
+{ "_id" : ObjectId("5c523b086ea6e5da51afa297"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29a"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29b"), "EID" : "e001", "name" : "abc", "dept" : "HR", "Salary" : "35000", "location" : "usa" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29c"), "EID" : "e001", "name" : "def", "dept" : "HR", "Salary" : "35000", "location" : "austr" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29d"), "EID" : "e001", "name" : "ghi", "dept" : "HR", "Salary" : "35000", "location" : "kerala" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29e"), "EID" : "e001", "name" : "jkl", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29f"), "EID" : "e001", "name" : "mno", "dept" : "HR", "Salary" : "35000", "location" : "france" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa2a0"), "EID" : "e001", "name" : "pqr", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa2a1"), "EID" : "e001", "name" : "stu", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a4"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : 35000, "location" : "Japan" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a5"), "EID" : "e001", "name" : "abc", "dept" : "HR", "Salary" : 35000, "location" : "usa" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a6"), "EID" : "e001", "name" : "def", "dept" : "HR", "Salary" : 20000, "location" : "austr" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a7"), "EID" : "e001", "name" : "ghi", "dept" : "HR", "Salary" : 8000, "location" : "kerala" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a8"), "EID" : "e001", "name" : "jkl", "dept" : "HR", "Salary" : 5000, "location" : "Japan" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a9"), "EID" : "e001", "name" : "mno", "dept" : "HR", "Salary" : 1000, "location" : "france" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2aa"), "EID" : "e001", "name" : "pqr", "dept" : "HR", "Salary" : 100, "location" : "Japan" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2ab"), "EID" : "e001", "name" : "stu", "dept" : "HR", "Salary" : 85000, "location" : "Japan" }
+>
+
+Question: Get everyone in Hr's salary and location ?
+
+ans. projection
+db.emp.find({"dept":"HR"},{"Salary":1,"location":1,_id:0}) means Salary and location from inventory WHERE dept =HR
+output of db.emp.find({"dept":"HR"},{"Salary":1,"location":1}) is 
+{ "_id" : ObjectId("5c523b086ea6e5da51afa297"), "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29a"), "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29b"), "Salary" : "35000", "location" : "usa" }
+
+can also write as :
+db.emp.find({"dept":"HR"},{"Salary":1,"location":1,_id:0}) here _id:0 is status id. 
+output is:
+{ "Salary" : "35000", "location" : "Japan" }
+{ "Salary" : "35000", "location" : "Japan" }
+{ "Salary" : "35000", "location" : "usa" }
+{ "Salary" : "35000", "location" : "austr" }
+{ "Salary" : "35000", "location" : "kerala" }
+{ "Salary" : "35000", "location" : "Japan" }
+{ "Salary" : "35000", "location" : "france"}
+
+Question: sort on the basis of salary
+db.emp.find({"dept":"HR"},{"Salary":1,"location":1,_id:0}).sort({"Salary":1})
+output is:
+{ "Salary" : 100, "location" : "Japan" }
+{ "Salary" : 1000, "location" : "france" }
+{ "Salary" : 5000, "location" : "Japan" }
+{ "Salary" : 8000, "location" : "kerala" }
+{ "Salary" : 20000, "location" : "austr" }
+{ "Salary" : 35000, "location" : "Japan" }
+{ "Salary" : 35000, "location" : "usa" }
+{ "Salary" : 85000, "location" : "Japan" }
+{ "Salary" : "35000", "location" : "Japan" }
+{ "Salary" : "35000", "location" : "Japan" }
+{ "Salary" : "35000", "location" : "usa" }
+{ "Salary" : "35000", "location" : "austr" }
+
+Question: update Rams salary from 8000 to 10000
+
+
+
+
+
+
+> db.emp.update({"name":"Ram"},{"Salary":12000000})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+ db.emp.find()
+{ "_id" : ObjectId("5c5235176ea6e5da51afa28f"), "Salary" : 12000000 }
+{ "_id" : ObjectId("5c5235176ea6e5da51afa290"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : "5000", "location" : "kerala" }
+{ "_id" : ObjectId("5c5235176ea6e5da51afa291"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : "5000", "location" : "kerala" }
+{ "_id" : ObjectId("5c52364d6ea6e5da51afa292") }
+{ "_id" : ObjectId("5c523b086ea6e5da51afa296"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : "25000", "location" : "China" }
+{ "_id" : ObjectId("5c523b086ea6e5da51afa297"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b086ea6e5da51afa298"), "EID" : "e001", "name" : "Ram", "dept" : "Finance", "Salary" : "15000", "location" : "India" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa299"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : "25000", "location" : "China" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29a"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29b"), "EID" : "e001", "name" : "abc", "dept" : "HR", "Salary" : "35000", "location" : "usa" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29c"), "EID" : "e001", "name" : "def", "dept" : "HR", "Salary" : "35000", "location" : "austr" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29d"), "EID" : "e001", "name" : "ghi", "dept" : "HR", "Salary" : "35000", "location" : "kerala" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29e"), "EID" : "e001", "name" : "jkl", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29f"), "EID" : "e001", "name" : "mno", "dept" : "HR", "Salary" : "35000", "location" : "france" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa2a0"), "EID" : "e001", "name" : "pqr", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa2a1"), "EID" : "e001", "name" : "stu", "dept" : "HR", "Salary" : "35000", "location" : "Japan" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa2a2"), "EID" : "e001", "name" : "vwx", "dept" : "Finance", "Salary" : "15000", "location" : "India" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a3"), "EID" : "e001", "name" : "Ram", "dept" : "IT", "Salary" : 25000, "location" : "China" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a4"), "EID" : "e001", "name" : "Ram", "dept" : "HR", "Salary" : 35000, "location" : "Japan" }
+{ "_id" : ObjectId("5c5242d46ea6e5da51afa2a5"), "EID" : "e001", "name" : "abc", "dept" : "HR", "Salary" : 35000, "location" : "usa" }
+Type "it" for more
+> db.emp.update({"name":"vwx"},$set:{"Salary":120000})
+2019-01-31T09:12:23.320+0530 E QUERY    [js] SyntaxError: missing ) after argument list @(shell):1:33
+> db.emp.update({"name":"vwx"},{$set:{"Salary":120000}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+>
+
+Question:update everything with a date 
+
+ db.emp.update({},{$set:{dateinserted:new Date()}},{multi:true})
+WriteResult({ "nMatched" : 27, "nUpserted" : 0, "nModified" : 27 })
+
+similarly upsert:true instead of multi true
+
+Question: find the highest salary.
+
+db.emp.find({},{"name":1,"Salary":1}).sort({sal:-1}).limit(10)
+{ "_id" : ObjectId("5c5235176ea6e5da51afa28f"), "Salary" : 12000000 }
+{ "_id" : ObjectId("5c5235176ea6e5da51afa290"), "name" : "Ram", "Salary" : "5000" }
+{ "_id" : ObjectId("5c5235176ea6e5da51afa291"), "name" : "Ram", "Salary" : "5000" }
+{ "_id" : ObjectId("5c52364d6ea6e5da51afa292") }
+{ "_id" : ObjectId("5c523b086ea6e5da51afa296"), "name" : "Ram", "Salary" : "25000" }
+{ "_id" : ObjectId("5c523b086ea6e5da51afa297"), "name" : "Ram", "Salary" : "35000" }
+{ "_id" : ObjectId("5c523b086ea6e5da51afa298"), "name" : "Ram", "Salary" : "15000" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa299"), "name" : "Ram", "Salary" : "25000" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29a"), "name" : "Ram", "Salary" : "35000" }
+{ "_id" : ObjectId("5c523b896ea6e5da51afa29b"), "name" : "abc", "Salary" : "35000" }
+-----------------------------------------------------------------------------------------
+
+
+
+
+in app.js
+var express=require('express');
+const app=express();
+var mongodb=require('mongodb');
+var mongoclient=mongodb.MongoClient;
+var url="mongodb://127.0.0.1:27017";
+app.set("view engine","ejs");
+app.get("/",function(req,res){
+res.render("Home");    
+})
+app.get("/insert",function(req,res){
+   mongoclient.connect(url,function(err,database)
+   {
+       var dtb=database.db('sample');
+    var col=dtb.collection("empl");
+    var data={name:"hghjg",sal:8900}
+   col.insert(data,function(err,rslt){
+        if(err){res.send("some things went wrong")}
+        else{res.send("data inserted successfully")}
+    })
+})
+})
+app.listen(8000,function(req,res){
+    console.log("server started listening")
+})
+
+
+in home.ejs
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Database SAmple</h1>
+    <form action="/insert" method="get">
+        <input type="submit" value="Insert"/>
+    </form>
+</body>
+</html>
+
+goto cmd in new terminal and type nodemon app.js
+goto localhost:8000
+and then goto cmd outside and type mongo
+thenn
+
+D:\Mongosamples>mongo
+MongoDB shell version v4.0.2
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 4.0.2
+Server has startup warnings:
+2019-01-17T09:48:18.208+0530 I CONTROL  [initandlisten]
+2019-01-17T09:48:18.208+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2019-01-17T09:48:18.208+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2019-01-17T09:48:18.209+0530 I CONTROL  [initandlisten]
+---
+Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+and anyone you share the URL with. MongoDB may use this information to make product
+improvements and to suggest MongoDB products and deployment options to you.
+
+To enable free monitoring, run the following command: db.enableFreeMonitoring()
+To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+-----------------------------------------------------------------------------------------------
+ then ...
+> use mydb
+switched to db mydb
+> db.empl.find();
+> use sample
+switched to db sample
+> db.empl.find();
+{ "_id" : ObjectId("5c52860e24ae0e1ca027459c"), "name" : "hghjg", "sal" : 8900 }
+>
+
+the above line is the output
+---------------------------------------------------------------------------------------------
+question: to give a value
+
+app.js
+var express=require('express');
+var bodyparser=require('body-parser')
+
+const app=express();
+
+app.use(bodyparser.urlencoded({extended:true}))
+
+var mongodb=require('mongodb');
+var mongoclient=mongodb.MongoClient;
+var url="mongodb://127.0.0.1:27017";
+app.set("view engine","ejs");
+app.get("/",function(req,res){
+res.render("Home");    
+})
+app.get("/insert",function(req,res){
+   mongoclient.connect(url,function(err,database)
+   {
+       var dtb=database.db('sample');
+    var col=dtb.collection("empl");
+    var data={name:req.body.empid,salary:req.body.salary}
+   col.insert(data,function(err,rslt){
+        if(err){res.send("some things went wrong")}
+        else{res.send("data inserted successfully")}
+    })
+})
+})
+app.listen(8000,function(req,res){
+    console.log("server started listening")
+})
+-------------------------------------------
+home.ejs
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Database SAmple</h1>
+    <form action="/insert" method="get">
+        <input type="text" name="empid"/>
+        
+        <input type="text" name="salary"/>
+<input type= "button" value= "submit"/>
+    </form>
+    </form>
+</body>
+</html>
+
+-------------------------------------------
+
+
+
+post ,get ,bodyparser study
+
+
+
+
+
+
+
+
+
+
+
+
+
+
