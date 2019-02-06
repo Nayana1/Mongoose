@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <table>
+                <th>no</th>
+                <th>BookID</th>
+                <th>Book NAme</th>
+                <th>Author</th>  
+                <th>BookPublisher</th>
+                            <% for(var i=0;i<data.length;i++){%>
+                        <tr>
+                            <td><%=(i+1)%></td>
+                            <td><%=data[i].bookid %></td>
+                            <td><%=data[i].bname %></td>
+                            <td><%=data[i].author %></td>
+                            
+                            
+                        </tr>
+                        <% }%>
+                        <form action="view"method="post">
+                            <input type="text"name="id1">
+                            <input type="submit" value="search">
+
+                        </form>
+                        <form action="view"method="get">
+                                <input type="text"name="id1">
+                                <input type="submit" value="search">
+    
+                            </form>
+                    </table>
+             
+</body>
+</html>

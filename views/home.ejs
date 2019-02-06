@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+</head>
+<body>
+
+    <li><a href="/insert1">Insert Data</a></li>
+    <li><a href="/delete">Delete Data</a></li>
+    <li><a href="/view">view Data</a></li>
+    <li><a href="/update">Update Data</a></li>
+   <form action="/view" method="get">
+        
+                <input type= "submit" value= "view"/>
+    </form> 
+    <form action="/delete" method="get">
+       <input type= "submit" value= "Delete"/>
+</form>
+<form action="/view" method="get">
+       <input type= "submit" value= "view"/>
+</form> 
+<form action="/edit" method="get">
+        <input type= "submit" value= "Edit"/>
+</form> 
+<form action="/update" method="get">
+        <input type= "submit" value= "update"/>
+</form> 
+<form action="/login" method="get">
+        <input type= "submit" value= "login"/>
+</form> 
+
+<form action="/upload" method='post'encType="multipart/form-data">
+<input type="file"
+name="sampleFile"/>
+<input type='submit'
+value='upload!'>
+</form>
+
+</html> 
